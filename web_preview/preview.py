@@ -36,6 +36,8 @@ def preview():
 		f = request.files['file']
 		project = read_qdpx_file(f)
 		return preview_template.render(project = project, filename = f.filename)
+	else:
+		return "Something went wrong..."
 
 if __name__ == '__main__':
    app.run(debug = True)
