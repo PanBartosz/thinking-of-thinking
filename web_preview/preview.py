@@ -1,7 +1,7 @@
 import re
 from markupsafe import Markup, escape
 from jinja2 import pass_eval_context, Environment, PackageLoader, select_autoescape
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from parseQDPX import *
 
 @pass_eval_context
@@ -34,7 +34,10 @@ def upload_file():
 def preview():
 	if request.method == 'POST':
 		f = request.files['file']
-		project = read_qdpx_file(f)
+		lu_code_name = request.form['lu-code-name']
+		f_code_name = request.form['f-code-name']
+		g_code_name = request.form['g-code-name']
+		project = read_qdpx_file(f, lu_code_name, f_code_name, g_code_name)
 		return preview_template.render(project = project, filename = f.filename)
 	else:
 		return "Something went wrong..."
