@@ -1,0 +1,27 @@
+<html>
+	<head>
+	<link rel="stylesheet" href="static/style.css">
+	</head>
+   <body>
+	  <form action = "./extract" method = "POST" 
+		 enctype = "multipart/form-data">
+		 <h2>
+			 Choose a QDPX (REFI-QDA) file:
+		</h2>
+		 <input type = "file" name = "file" />
+		 <ul>
+			 <li>
+		 		Code used for fragments to be extracted (e.g. "Fragment" or "Unit"): <input type = "text" name = "fragment-code-name" />
+			 </li>
+			 <li>
+		 		Username (e.g. "kkus" or "bmack"): <input type = "text" name = "user-name" />
+			 </li>
+		 </ul>
+         <input type = "submit"/>
+	  </form>
+	  
+	  {% if fname %}
+	  <a href=data/{{fname}}>{{ fname }}</a>
+	  {% endif %}
+   </body>
+</html>

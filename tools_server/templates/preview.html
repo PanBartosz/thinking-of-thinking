@@ -1,0 +1,87 @@
+<html>
+<head>
+	<link rel="stylesheet" href="static/style.css">
+	</style>
+</head>
+<body>
+	<h1>Preview of QDPX file <pre>{{ filename }}</pre></h1>
+	<h2> Codes </h2>
+	<ul>
+		{% for code in project.codes %}
+		{% if not code.parent %}
+		<li>
+			{{ code.name }}
+			{% if code.children|length > 0 %}
+			<ul>
+				{% for code_two in code.children %}
+				<li>
+					{{ code_two.name }}
+					{% if code_two.children|length > 0 %}
+					<ul>
+						{% for code_three in code_two.children %}
+						<li>
+							{{ code_three.name }}
+						</li>
+						
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		</li>
+		{% endif %}
+		{% endfor %}
+	</ul>
+	
+	<h2> Fragments </h2>
+	
+	{% for source in project.sources %}
+	<h3>{{ source.name }}</h3>
+	<div class="full-text">
+		<p>
+			{{ source.full_text|nl2br}}
+		</p>
+	</div>
+	
+	{% for metaphor in source.metaphors %}
+	<h3>
+		Target: {% if 'Target' in metaphor.info %} {{ metaphor.info.Target.name}} {% else %} <span class="warning"> Not coded </span> {% endif %}
+	</h3>
+	<h3>
+		Source: {% if 'Source' in metaphor.info %} {{ metaphor.info.Source.name}} {% else %} <span class="warning"> Not coded </span> {% endif %}
+	</h3>
+	<h3>
+		Type: {% if 'Type' in metaphor.info %} {{ metaphor.info.Type.name}} {% else %} <span class="warning"> Not coded </span> {% endif %}
+	</h3>
+	<h3>
+		Lexical Units
+	</h3>
+	<ul>
+		{% for lu in metaphor.lus %}
+		<li>
+			{{ lu.full_text }} ({{ lu.code.name }})
+			<ul>
+				{% for element in lu.Elements %}
+				<li>
+					{{ element.name }}
+				</li>
+				{% endfor %}
+
+				{% for element in lu.Grammar %}
+				<li>
+					(Grammar) {{ element.name }} ({{ element.parent.name }})
+				</li>
+				{% endfor %}
+			</ul>
+		</li>
+		{% endfor %}
+	</ul>
+	<hr>
+	{% endfor %}
+	{% endfor %}
+	
+	
+</body>
+</html>

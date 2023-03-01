@@ -1,0 +1,26 @@
+<html>
+	<head>
+	<link rel="stylesheet" href="static/style.css">
+	</head>
+   <body>
+	  <form action = "./preview" method = "POST" 
+		 enctype = "multipart/form-data">
+		 <h2>
+			 Choose a QDPX (REFI-QDA) file:
+		</h2>
+		 <input type = "file" name = "file" />
+		 <ul>
+			 <li>
+		 		Code used for Lexical Unit (e.g. "Lexical unit" or "Lexical Unit"): <input type = "text" name = "lu-code-name" />
+			 </li>
+			 <li>
+		 		Code used for Frame (e.g. "Frame" or "Frames"): <input type = "text" name = "f-code-name" />
+			 </li>
+			 <li>
+		 		Code used for Grammar (e.g. "Grammar"): <input type = "text" name = "g-code-name" />
+			 </li>
+		 </ul>
+         <input type = "submit"/>
+      </form>
+   </body>
+</html>
