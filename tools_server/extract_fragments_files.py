@@ -173,7 +173,6 @@ def extract_fragments(project, sources, fragment_code, filename):
 
 
 def make_qdpx_project(documents, links, files, output, project, user):
-    documents.reverse()
     documents_xml = "\n<Sources>\n" + "".join(documents) + "\n</Sources>"
     links.reverse()
     links_xml = "\n<Links>" + "".join(links) + "\n</Links>"
