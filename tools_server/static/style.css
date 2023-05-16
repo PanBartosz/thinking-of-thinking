@@ -182,3 +182,27 @@
 		span.warning  {
 			color: #ee0000 !important;
 		}
+
+		table {
+			margin: auto;
+			width: 800px;
+		}
+
+		td, th {
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		th h3 {
+			margin-top: 16px;
+			margin-bottom: 16px;
+		}
+
+		ul {
+			display: block;
+			margin: auto;
+			width: fit-content;
+		}
+		li {
+			text-align: initial;
+		}

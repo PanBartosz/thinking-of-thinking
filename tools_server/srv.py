@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, url_for, send_from_directory
 from parseQDPX import read_qdpx_file, Project
 from extract_fragments_files import extract_fragments, make_qdpx_project
 import shutil
+from compare_pair import ProjectPair
 
 
 @pass_eval_context
@@ -33,6 +34,8 @@ env.filters['nl2br'] = nl2br
 upload_template = env.get_template("upload.html")
 preview_template = env.get_template("preview.html")
 extract_template = env.get_template("extract.html")
+compare_template = env.get_template("compare.html")
+upload_two_template = env.get_template("upload_two.html")
 
 app = Flask(__name__)
 
@@ -55,6 +58,35 @@ def preview():
         project = Project(project, sources, lu_code_name,
                           f_code_name, g_code_name)
         return preview_template.render(project=project, filename=f.filename)
+    else:
+        return "Something went wrong..."
+
+# QDPX files comparator
+@app.route('/upload_two')
+def upload_tw_file():
+    return upload_two_template.render()
+
+@app.route('/compare', methods=['GET', 'POST'])
+def compare():
+    if request.method == 'POST':
+        f_first = request.files['file_first']
+        f_second = request.files['file_second']
+        lu_code_name = request.form['lu-code-name']
+        f_code_name = request.form['f-code-name']
+        g_code_name = "Grammar"
+        project_first, sources_first = read_qdpx_file(f_first)
+        project_second, sources_second = read_qdpx_file(f_second)
+        project_first = Project(project_first, sources_first, lu_code_name,
+                          f_code_name, g_code_name)
+        project_second = Project(project_second, sources_second, lu_code_name,
+                          f_code_name, g_code_name)
+                        
+        project_pair = ProjectPair(project_first, project_second)
+
+        return compare_template.render(project_pair=project_pair,
+                                        filename_first=f_first.filename,
+                                        filename_second=f_second.filename
+                                        )
     else:
         return "Something went wrong..."
 

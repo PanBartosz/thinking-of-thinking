@@ -1,0 +1,27 @@
+<html>
+	<head>
+	<link rel="stylesheet" href="static/style.css">
+	</head>
+   <body>
+	  <form action = "./compare" method = "POST" 
+		 enctype = "multipart/form-data">
+		 <h2>
+			 Choose a QDPX (REFI-QDA) files:
+		</h2>
+		<h3>Thinker's file</h3>
+		 <input type = "file" name = "file_first" />
+		<h3>Coder's file</h3>
+		 <input type = "file" name = "file_second" />
+		<h3>Names of codes</h3>
+		 <ul>
+			 <li>
+		 		Code used for Lexical Unit (probably "Lexical_unit"): <input type = "text" name = "lu-code-name" />
+			 </li>
+			 <li>
+		 		Code used for Frame (probably "Frame"): <input type = "text" name = "f-code-name" />
+			 </li>
+		 </ul>
+         <input type = "submit"/>
+      </form>
+   </body>
+</html>

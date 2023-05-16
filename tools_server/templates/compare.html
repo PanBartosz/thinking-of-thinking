@@ -1,0 +1,384 @@
+<html>
+
+<head>
+	<link rel="stylesheet" href="static/style.css">
+	</style>
+</head>
+
+<body>
+	<h1>Comparison of QDPX files: </h1>
+	<ul>
+		<li>
+			<h2>
+				Thinker: <pre>{{ filename_first }}</pre>
+			</h2>
+		</li>
+		<li>
+			<h2>
+				Coder: <pre>{{ filename_second }}</pre>
+			</h2>
+		</li>
+	</ul>
+
+	<h2> Fragments </h2>
+
+	{% for source, source_data in project_pair.sources.items() %}
+	<h3>{{ source.name }}</h3>
+	<div class="full-text">
+		<p>
+			{{ source.full_text|nl2br}}
+		</p>
+	</div>
+
+	{% for comparison in source_data["common"] %}
+	<table>
+		<tr>
+			<th width="30%">
+				Thinker
+			</th>
+			<th width="40%">
+				Common
+			</th>
+			<th width="30%">
+				Coder
+			</th>
+		</tr>
+		<tr>
+			<th colspan="3">
+				<h3>Source domain</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{% if not comparison.source_domain["common"] %}
+				{{ comparison.source_domain["first"].name }}
+				{% endif %}
+			</td>
+				
+			<td>{{ comparison.source_domain["common"].name }}</td>
+			<td>
+				{% if not comparison.source_domain["common"] %}
+				{{ comparison.source_domain["second"].name }}
+				{% endif %}
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Target domain</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{% if not comparison.target_domain["common"] %}
+				{{ comparison.target_domain["first"].name }}
+				{% endif %}
+			</td>
+			<td>{{ comparison.target_domain["common"].name }}</td>
+			<td>
+				{% if not comparison.target_domain["common"] %}
+				{{ comparison.target_domain["second"].name }}
+				{% endif %}
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Metaphor type</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{% if not comparison.metaphor_type["common"] %}
+				{{ comparison.metaphor_type["first"].name }}
+				{% endif %}
+			</td>
+			<td>{{ comparison.metaphor_type["common"].name }}</td>
+			<td>
+				{% if not comparison.metaphor_type["common"] %}
+				{{ comparison.metaphor_type["second"].name }}
+				{% endif %}
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Lexical units</h3>
+			</th>
+		</tr>
+
+		{% for lu_pair, data in comparison.aligned_elements.items() %}
+		<tr>
+			<td colspan="3">
+				{{ lu_pair[0].full_text }} ({{ lu_pair[0].code.name }})
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<ul>
+					{% for element in data["first"] %}
+					<li>
+						{{ element.name }}
+					</li>
+					{% endfor %}
+				</ul>
+			</td>
+
+			<td>
+				<ul>
+					{% for element in data["common"] %}
+					<li>
+						{{ element.name }}
+					</li>
+					{% endfor %}
+				</ul>
+			</td>
+
+			<td>
+				<ul>
+					{% for element in data["second"] %}
+					<li>
+						{{ element.name }}
+					</li>
+					{% endfor %}
+				</ul>
+			</td>
+
+		</tr>
+		{% endfor %}
+
+		{% for lu in comparison.lus_only_first %}
+		<tr>
+			<td>
+				{{ lu.full_text }} ({{ lu.code.name }})
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>
+				<ul>
+					{% for element in lu.Elements %}
+					<li>
+						{{ element.name }}
+					</li>
+					{% endfor %}
+				</ul>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+		{% endfor %}
+		{% for lu in comparison.lus_only_second %}
+		<tr>
+			<td></td>
+			<td></td>
+			<td>
+				{{ lu.full_text }} ({{ lu.code.name }})
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td>
+				<ul>
+					{% for element in lu.Elements %}
+					<li>
+						{{ element.name }}
+					</li>
+					{% endfor %}
+				</ul>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	<hr>
+	{% endfor %}
+
+	{% for metaphor in source_data["first"] %}
+	<table>
+		<tr>
+			<th width="30%">
+				First
+			</th>
+			<th width="40%">
+				Common
+			</th>
+			<th width="30%">
+				Second
+			</th>
+		</tr>
+		<tr>
+			<th colspan="3">
+				<h3>Source domain</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{{ metaphor.info["Source"].name }}
+			</td>
+				
+			<td></td>
+			<td>
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Target domain</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{{ metaphor.info["Target"].name }}
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Metaphor type</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				{{ metaphor.info["Type"].name }}
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Lexical units</h3>
+			</th>
+		</tr>
+
+		{% for lu in metaphor.lus %}
+		<tr>
+			<td>
+				{{ lu.full_text }} ({{ lu.code.name }})
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+				<ul>
+					{% for element in lu.Elements %}
+					<li>
+						{{ element.name }}
+					</li>
+					{% endfor %}
+				</ul>
+			</td>
+
+			<td></td>
+
+			<td></td>
+
+		</tr>
+		{% endfor %}
+	</table>
+
+	<hr>
+	{% endfor %}
+
+
+	{% for metaphor in source_data["Second"] %}
+	<table>
+		<tr>
+			<th width="30%">
+				First
+			</th>
+			<th width="40%">
+				Common
+			</th>
+			<th width="30%">
+				Second
+			</th>
+		</tr>
+		<tr>
+			<th colspan="3">
+				<h3>Source domain</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+			</td>
+				
+			<td></td>
+			<td>
+				{{ metaphor.info["Source"].name }}
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Target domain</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td></td>
+			<td>
+				{{ metaphor.info["Target"].name }}
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Metaphor type</h3>
+			</th>
+		</tr>
+		<tr>
+			<td>
+			</td>
+			<td></td>
+			<td>
+				{{ metaphor.info["Type"].name }}
+			</td>
+		</tr>
+
+		<tr>
+			<th colspan="3">
+				<h3>Lexical units</h3>
+			</th>
+		</tr>
+
+		{% for lu in metaphor.lus %}
+		<tr>
+			<td>
+				{{ lu.full_text }} ({{ lu.code.name }})
+			</td>
+		</tr>
+
+		<tr>
+			<td></td>
+			<td></td>
+			<td>
+				<ul>
+					{% for element in lu.Elements %}
+					<li>
+						{{ element.name }}
+					</li>
+					{% endfor %}
+				</ul>
+			</td>
+
+
+		</tr>
+		{% endfor %}
+	</table>
+
+	<hr>
+	{% endfor %}
+	{% endfor %}
+
+
+</body>
+
+</html>
