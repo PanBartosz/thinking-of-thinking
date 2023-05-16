@@ -216,11 +216,11 @@ class Metaphor:
             code = self.source.project.codes_by_guid[coderef['targetGUID']]
             if code.parent == self.source.project.codes_by_name[self.source.project.LU_CODE_NAME]:
                 self.extract_lu(code, start_pos, end_pos, full_text)
-            if full_text == "TYPE":
+            if full_text == "METAPHOR TYPE":
                 info["Type"] = code
-            if full_text == "TARGET":
+            if full_text == "TARGET DOMAIN":
                 info["Target"] = code
-            if full_text == "SOURCE":
+            if full_text == "SOURCE DOMAIN":
                 info["Source"] = code
         return info
 
