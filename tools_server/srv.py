@@ -49,7 +49,8 @@ def preview():
         f = request.files['file']
         lu_code_name = request.form['lu-code-name']
         f_code_name = request.form['f-code-name']
-        g_code_name = request.form['g-code-name']
+        #g_code_name = request.form['g-code-name']
+        g_code_name = "Grammar"
         project, sources = read_qdpx_file(f)
         project = Project(project, sources, lu_code_name,
                           f_code_name, g_code_name)

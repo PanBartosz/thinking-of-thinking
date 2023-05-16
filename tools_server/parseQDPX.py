@@ -165,10 +165,11 @@ class LexicalUnit:
         self.end_pos = e_pos
         self.full_text = full_text
         self.Elements = []
-        self.Grammar = []
+#        self.Grammar = []
 
     def __repr__(self):
-        return f'LexicalUnit(text={self.full_text}, \ncode={self.code.name}, \nelements={self.Elements}, \ngrammar={self.Grammar})\n'
+        #return f'LexicalUnit(text={self.full_text}, \ncode={self.code.name}, \nelements={self.Elements}, \ngrammar={self.Grammar})\n'
+        return f'LexicalUnit(text={self.full_text}, \ncode={self.code.name}, \nelements={self.Elements})\n'
 
 
 class Metaphor:
@@ -234,8 +235,8 @@ class Metaphor:
             if full_text != lu.full_text:
                 continue
             code = self.source.project.codes_by_guid[coderef['targetGUID']]
-            if code.isChildOf(self.source.project.codes_by_name[self.source.project.GRAMMAR_CODE_NAME]):
-                lu.Grammar.append(code)
+            #if code.isChildOf(self.source.project.codes_by_name[self.source.project.GRAMMAR_CODE_NAME]):
+            #    lu.Grammar.append(code)
             if code.isChildOf(self.source.project.codes_by_name[self.source.project.FRAME_CODE_NAME]):
                 lu.Elements.append(code)
         self.lus.append(lu)
