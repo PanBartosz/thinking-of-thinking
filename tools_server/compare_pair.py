@@ -9,6 +9,8 @@ class MetaphorComparison:
     def __init__(self, aligned_metaphor):
         self.metaphor_first = aligned_metaphor[0]
         self.metaphor_second = aligned_metaphor[1]
+        self.offset_first = aligned_metaphor[2]
+        self.offset_second = aligned_metaphor[3]
 
         self.source_domain = {"first": self.metaphor_first.info["Source"],
                               "second": self.metaphor_second.info["Source"]}
@@ -38,8 +40,8 @@ class MetaphorComparison:
         for lu_first in self.metaphor_first.lus:
             for lu_second in self.metaphor_second.lus:
                 if (lu_first.code.name == lu_second.code.name and
-                    lu_first.start_pos == lu_second.start_pos and
-                        lu_first.end_pos == lu_second.end_pos):
+                    lu_first.start_pos - self.offset_first == lu_second.start_pos - self.offset_second and
+                        lu_first.end_pos - self.offset_first == lu_second.end_pos - self.offset_second):
                     aligned_lus.append((lu_first, lu_second))
                     break
             else:
@@ -48,8 +50,8 @@ class MetaphorComparison:
         for lu_second in self.metaphor_second.lus:
             for lu_first in self.metaphor_first.lus:
                 if (lu_first.code.name == lu_second.code.name and
-                    lu_first.start_pos == lu_second.start_pos and
-                        lu_first.end_pos == lu_second.end_pos):
+                    lu_first.start_pos - self.offset_first == lu_second.start_pos - self.offset_second and
+                        lu_first.end_pos - self.offset_first == lu_second.end_pos - self.offset_second):
                     break
             else:
                 print("Unmatched LU found")
@@ -128,7 +130,10 @@ class ProjectPair:
             for metaphor_second in src_second.metaphors:
                 if (metaphor_first.info["Target"].name == metaphor_second.info["Target"].name or
                         metaphor_first.info["Source"].name == metaphor_second.info["Source"].name):
-                    aligned_metaphors.append((metaphor_first, metaphor_second))
+                    offset_first, offset_second = self.get_offsets(
+                        metaphor_first, metaphor_second)
+                    aligned_metaphors.append(
+                        (metaphor_first, metaphor_second, offset_first, offset_second))
                     print("Found matching pair of metaphors!")
                     break
             else:
@@ -138,11 +143,15 @@ class ProjectPair:
             for metaphor_first in src_first.metaphors:
                 if (metaphor_first.info["Target"].name == metaphor_second.info["Target"].name or
                         metaphor_first.info["Source"].name == metaphor_second.info["Source"].name):
+                    print("Found matching pair of metaphors!")
                     break
             else:
                 metaphors_second.append(metaphor_second)
 
         return aligned_metaphors, metaphors_first, metaphors_second
+
+    def get_offsets(self, metaphor_first, metaphor_second):
+        return (metaphor_first.span[0], metaphor_second.span[0])
 
     def __repr__(self):
         return indent(f'ProjectPair(Sources={self.sources})\n', "\t")
