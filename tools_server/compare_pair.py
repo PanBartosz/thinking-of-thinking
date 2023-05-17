@@ -1,4 +1,4 @@
-from parseQDPX import Project, Metaphor, read_qdpx_file
+from parseQDPX import Project, Metaphor, read_qdpx_file, Code
 import argparse
 from pprint import pprint, pp, pformat
 import datetime
@@ -18,8 +18,8 @@ class MetaphorComparison:
         self.target_domain = {"first": self.metaphor_first.info["Target"],
                               "second": self.metaphor_second.info["Target"]}
 
-        self.metaphor_type = {"first": self.metaphor_first.info["Type"] if "Type" in self.metaphor_first.info else "Not coded",
-                              "second": self.metaphor_second.info["Type"] if "Type" in self.metaphor_second.info else "Not coded"}
+        self.metaphor_type = {"first": self.metaphor_first.info["Type"] if "Type" in self.metaphor_first.info else Code("Not coded", "XXX", None),
+                              "second": self.metaphor_second.info["Type"] if "Type" in self.metaphor_second.info else Code("Not coded", "XXX", None)}
 
         self.source_domain["common"] = self.source_domain["first"] if self.source_domain[
             "first"].name == self.source_domain["second"].name else None
