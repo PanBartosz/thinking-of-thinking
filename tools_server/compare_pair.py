@@ -18,8 +18,8 @@ class MetaphorComparison:
         self.target_domain = {"first": self.metaphor_first.info["Target"],
                               "second": self.metaphor_second.info["Target"]}
 
-        self.metaphor_type = {"first": self.metaphor_first.info["Type"],
-                              "second": self.metaphor_second.info["Type"]}
+        self.metaphor_type = {"first": self.metaphor_first.info["Type"] if "Type" in self.metaphor_first.info else "Not coded",
+                              "second": self.metaphor_second.info["Type"] if "Type" in self.metaphor_second.info else "Not coded"}
 
         self.source_domain["common"] = self.source_domain["first"] if self.source_domain[
             "first"].name == self.source_domain["second"].name else None
